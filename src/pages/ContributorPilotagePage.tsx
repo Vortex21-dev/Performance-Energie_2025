@@ -1859,7 +1859,7 @@ const ContributorPilotagePage = () => {
                       Processus
                     </th>
                     <th scope="col" className="w-12 px-6 py-3"></th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">
                       Indicateur
                     </th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -1920,17 +1920,18 @@ const ContributorPilotagePage = () => {
                               )}
                             </button>
                           </td>
-                          <td className="px-6 py-4">
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">{indicator.indicateur}</div>
-                              <div className="text-xs text-gray-500">{indicator.code}</div>
-                              {indicator.unite && (
-                                <div className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded mt-1 inline-block">
-                                  {indicator.unite}
-                                </div>
-                              )}
-                            </div>
-                          </td>
+                 <td className="px-6 py-4 w-64">
+  <div>
+    <div className="text-sm font-medium text-gray-900">{indicator.indicateur}</div>
+    <div className="text-xs text-gray-500">{indicator.code}</div>
+    {indicator.unite && (
+      <div className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded mt-1 inline-block">
+        {indicator.unite}
+      </div>
+    )}
+  </div>
+</td>
+
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-lg font-bold text-gray-900">
                               {indicator.value !== null ? indicator.value.toLocaleString() : '-'}
