@@ -813,7 +813,7 @@ const ContributorPilotagePage = () => {
         .in('indicator_code', allIndicatorCodes)
         .eq('site_name', userSite)
         .eq('submitted_by', user.email)
-        .eq('indicators.type', 'Primaire');
+      {/* .eq('indicators.type', 'Primaire');*/}
 
       if (selectedProcessus) {
         // Pour filtrer par processus, on récupère d'abord les indicateurs de ce processus
@@ -830,6 +830,7 @@ const ContributorPilotagePage = () => {
 
       if (selectedStatus) {
         query = query.eq('status', selectedStatus);
+        
       }
 
       const { data, error } = await query.order('created_at', { ascending: false });
