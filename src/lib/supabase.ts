@@ -50,7 +50,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 let connectionTestPromise: Promise<boolean> | null = null;
 
 // Add retry utility function
-const retryWithBackoff = async <T>(
+export const retryWithBackoff = async <T>(
   fn: () => Promise<T>,
   maxRetries: number = 5,
   baseDelay: number = 1500
