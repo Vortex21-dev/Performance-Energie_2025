@@ -1920,8 +1920,8 @@ const ContributorPilotagePage = () => {
                               )}
                             </button>
                           </td>
-                 <td className="px-6 py-4 w-64">
-  <div>
+                 <td className="px-6 py-4 min-w-[250px]">
+  <div className="break-words">
     <div className="text-sm font-medium text-gray-900">{indicator.indicateur}</div>
     <div className="text-xs text-gray-500">{indicator.code}</div>
     {indicator.unite && (
