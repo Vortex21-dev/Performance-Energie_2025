@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'; 
 import { PieChart, ArrowLeft, Database, BarChart3, Filter, Search, Edit3, Save, X, CheckCircle, Clock, AlertCircle, FileText, User, Plus, Menu, ChevronDown, ChevronRight, ChevronUp, ChevronLeft, Home, Layers, TrendingUp, Settings, LogOut, ClipboardCheck, MessageSquare, Calendar, Target, AlertTriangle, Gauge, Activity, Zap, Building2, Award, RefreshCw, Eye, Download } from 'lucide-react'; 
 import { useAuth } from '../context/AuthContext'; 
-import { supabase, retryWithBackoff } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
+import { retryWithBackoff } from '../lib/supabase';
 
 interface IndicatorValue { 
   id: string; 
@@ -1099,36 +1100,30 @@ const ContributorPilotagePage = () => {
         throw new Error('Une valeur existe déjà pour cet indicateur dans cette période');
       }
       
-      const { error: insertError } = await retryWithBackoff(() =>
-        supabase
-          .from('indicator_values')
-          .insert([{
-            period_id: data.periodId,
-            indicator_code: selectedIndicatorForAdd.indicator_code,
-            processus_code: selectedIndicatorForAdd.processus_code,
-            value: data.value ? parseFloat(data.value) : null,
-            unit: selectedIndicatorForAdd.indicator_unit,
-            status: 'submitted',
-            comment: data.comment,
-            submitted_by: user.email,
-            submitted_at: new Date().toISOString(),
-            organization_name: profileData.organization_name,
-            filiere_name: profileData.filiere_name,
-            filiale_name: profileData.filiale_name,
-            site_name: userSite
-          }])
-      );
+      const { error: insertError } = await supabase
+        .from('indicator_values')
+        .insert([{
+          period_id: data.periodId,
+          indicator_code: selectedIndicatorForAdd.indicator_code,
+          processus_code: selectedIndicatorForAdd.processus_code,
+          value: data.value ? parseFloat(data.value) : null,
+          unit: selectedIndicatorForAdd.indicator_unit,
+          status: 'submitted',
+          comment: data.comment,
+          submitted_by: user.email,
+          submitted_at: new Date().toISOString(),
+          organization_name: profileData.organization_name,
+          filiere_name: profileData.filiere_name,
+          filiale_name: profileData.filiale_name,
+          site_name: userSite
+        }]);
         
       if (insertError) throw insertError;
       
       fetchIndicatorValues();
     } catch (error: any) {
       console.error('Error saving new indicator value:', error);
-      if (error.message?.includes('timeout') || error.code === '57014') {
-        throw new Error('Timeout de la base de données. L\'opération a été réessayée automatiquement. Si le problème persiste, veuillez réessayer plus tard.');
-      } else {
-        throw new Error('Erreur lors de l\'enregistrement de la nouvelle valeur: ' + error.message);
-      }
+      throw error;
     }
   };
 
