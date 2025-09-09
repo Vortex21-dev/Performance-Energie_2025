@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PieChart, ArrowLeft, Database, BarChart3, Filter, Search, Edit3, Save, X, CheckCircle, Clock, AlertCircle, FileText, User, Plus, Menu, ChevronDown, ChevronRight, ChevronUp, ChevronLeft, Home, Layers, TrendingUp, Settings, LogOut, ClipboardCheck, MessageSquare, Calendar, Target, AlertTriangle, Gauge, Activity, Zap, Building2, Award, RefreshCw, Eye, Download } from 'lucide-react'; 
 import { useAuth } from '../context/AuthContext'; 
 import { supabase } from '../lib/supabase';
+import { retryWithBackoff } from '../lib/supabase';
 
 interface IndicatorValue { 
   id: string; 
