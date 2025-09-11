@@ -134,7 +134,19 @@ const ComplexCompanyFormPage: React.FC = () => {
       )
     }));
   };
+// Avant l'envoi à Supabase, convertissez la valeur en nombre
+const numericValue = typeof formData.value === 'string' 
+  ? parseFloat(formData.value) 
+  : formData.value;
 
+// Ou utilisez une validation robuste
+function ensureNumeric(value) {
+  if (value === null || value === undefined || value === '') return null;
+  const num = typeof value === 'number' ? value : parseFloat(value);
+  return isNaN(num) ? null : num;
+}
+
+const safeValue = ensureNumeric(formData.value);
   const addFiliere = () => {
     setOrganization(prev => ({
       ...prev,
