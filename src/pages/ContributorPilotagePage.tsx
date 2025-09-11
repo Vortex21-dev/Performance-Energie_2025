@@ -1088,7 +1088,7 @@ const ContributorPilotagePage = () => {
         .select('id')
         .eq('period_id', data.periodId)
         .eq('indicator_code', selectedIndicatorForAdd.indicator_code)
-        .eq('processus_code', selectedIndicatorForAdd.processus_code)
+        value: typeof value === 'string' ? parseFloat(value) : value,
         .eq('organization_name', profileData.organization_name)
         .eq('site_name', userSite)
         .eq('submitted_by', user.email)
@@ -1098,8 +1098,12 @@ const ContributorPilotagePage = () => {
       
       if (existingData) {
         throw new Error('Une valeur existe déjà pour cet indicateur dans cette période');
+      // 3. Validation du type de données
+      if (indicatorValueData.value !== null && (isNaN(indicatorValueData.value) || indicatorValueData.value === undefined)) {
+        throw new Error('La valeur doit être un nombre valide');
       }
-      
+      }
+      // 4. Insérer avec toutes les informations
       const { error: insertError } = await supabase
         .from('indicator_values')
         .insert([{
