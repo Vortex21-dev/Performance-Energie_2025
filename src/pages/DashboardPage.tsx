@@ -411,7 +411,7 @@ const DashboardPage: React.FC = () => {
       </AnimatePresence>
 
       {/* Header /aeria.jpg  */}
-      <header className="bg-white shadow-sm sticky top-0 z-40 border-b border-gray-100">
+         <header className="bg-white shadow-sm sticky top-0 z-40 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <motion.div 
@@ -449,42 +449,44 @@ const DashboardPage: React.FC = () => {
                 <div>
                   <p className="text-sm font-medium text-gray-700">{user?.email}</p>
                   <p className="text-xs text-gray-500 capitalize">
-                    {user?.role === 'admin_client' && user?.original_role === 'admin'
-                      ? `Admin Client - ${organizationData?.name || 'Organisation'}`
-                      : user?.role === 'admin_client'
-                      ? 'Admin Client'
-                      : user?.role?.replace('_', ' ') || 'Compte actif'}
+                    {user?.role?.replace('_', ' ') || 'Compte actif'}
                   </p>
                 </div>
               </div>
-  <div className="flex justify-center">
-  <div className="w-[900px] h-[160px] bg-[url('/dash.jpeg')] bg-cover bg-center rounded-2xl shadow-md" />
-</div>            
+              
               <div className="flex space-x-2">
+                {user?.role === 'admin_client' && isAdmin && (
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleReturnToAdmin}
+                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-all border border-amber-200"
+                  >
+                    <Shield className="h-4 w-4" />
+                    <span className="text-sm font-medium">Retour Admin</span>
+                  </motion.button>
+                )}
+                
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleLogout}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all border ${
-                    user?.role === 'admin_client' && user?.original_role === 'admin'
-                      ? 'bg-red-50 text-red-600 hover:bg-red-100 border-red-200' 
-                      : 'bg-red-50 text-red-600 hover:bg-red-100 border-red-200'
-                  }`}
+                  className="flex items-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all border border-red-200"
                 >
-                  {user?.role === 'admin_client' && user?.original_role === 'admin' ? (
-                    <Shield className="h-4 w-4" />
-                  ) : (
-                    <LogOut className="h-4 w-4" />
-                  )}
-                  <span className="text-sm font-medium">
-                    {user?.role === 'admin_client' && user?.original_role === 'admin' ? 'Retour Admin' : 'Déconnexion'}
-                  </span>
+                  <LogOut className="h-4 w-4" />
+                  <span className="text-sm font-medium">Déconnexion</span>
                 </motion.button>
               </div>
             </motion.div>
           </div>
         </div>
       </header>
+
+      {/* Hero Section */}
+<div className="flex justify-center">
+  <div className="w-[900px] h-[160px] bg-[url('/dash.jpeg')] bg-cover bg-center rounded-2xl shadow-md" />
+</div>
+
 
       {/* Features Section */}
       <section className="py-16 bg-white">
