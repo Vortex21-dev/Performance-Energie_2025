@@ -457,7 +457,9 @@ const DashboardPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              
+  <div className="flex justify-center">
+  <div className="w-[900px] h-[160px] bg-[url('/dash.jpeg')] bg-cover bg-center rounded-2xl shadow-md" />
+</div>            
               <div className="flex space-x-2">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
