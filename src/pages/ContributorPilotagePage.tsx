@@ -1857,9 +1857,7 @@ const ContributorPilotagePage = () => {
                       Cible
                     </th>
 
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Variation
-                    </th>
+
 
                   </tr>
                 </thead>
@@ -1928,14 +1926,7 @@ const ContributorPilotagePage = () => {
                             </div>
                           </td>
             
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center space-x-2">
-                              {getVariationIcon(indicator.variations_pourcent)}
-                              <span className={`text-sm font-medium ${getPerformanceColor(indicator.variations_pourcent)}`}>
-                                {indicator.variations_pourcent !== null ? `${indicator.variations_pourcent.toFixed(1)}` : 'N/A'}
-                              </span>
-                            </div>
-                          </td>
+      
                      
                         </motion.tr>
                         
