@@ -1,1 +1,0 @@
-ALTER TABLE collection_periods DISABLE ROW LEVEL SECURITY;

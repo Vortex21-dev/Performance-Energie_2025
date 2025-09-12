@@ -20,7 +20,6 @@ import {
   FileText
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { useAuth } from '../context/AuthContext';
 
 interface Organization {
   name: string;
@@ -43,16 +42,12 @@ interface CollectionPeriod {
 
 const CollectionManagementPage: React.FC = () => {
   const navigate = useNavigate();
-  const { user, profile } = useAuth();
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [collectionPeriods, setCollectionPeriods] = useState<CollectionPeriod[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   
-  // Check if user is admin (not admin_client)
-  const isAdmin = profile?.role === 'admin';
-
   // Form state
   const [formData, setFormData] = useState({
     organization_name: '',
@@ -87,12 +82,6 @@ const CollectionManagementPage: React.FC = () => {
     fetchCollectionPeriods();
   }, []);
 
-  // Redirect non-admin users
-  useEffect(() => {
-    if (profile && !isAdmin) {
-      navigate('/dashboard');
-    }
-  }, [profile, isAdmin, navigate]);
   const fetchOrganizations = async () => {
     try {
       const { data, error } = await supabase
@@ -162,11 +151,6 @@ const CollectionManagementPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!isAdmin) {
-      setError('Accès refusé. Seuls les administrateurs peuvent créer des périodes de collecte.');
-      return;
-    }
-
     if (!formData.organization_name || !formData.start_date || !formData.end_date) {
       setError('Veuillez remplir tous les champs obligatoires');
       return;
@@ -243,11 +227,6 @@ const CollectionManagementPage: React.FC = () => {
   };
 
   const handleEdit = (period: CollectionPeriod) => {
-    if (!isAdmin) {
-      setError('Accès refusé. Seuls les administrateurs peuvent modifier des périodes de collecte.');
-      return;
-    }
-
     setEditingPeriod(period);
     setEditFormData({
       year: period.year,
@@ -263,11 +242,6 @@ const CollectionManagementPage: React.FC = () => {
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!isAdmin) {
-      setError('Accès refusé. Seuls les administrateurs peuvent modifier des périodes de collecte.');
-      return;
-    }
-
     if (!editingPeriod || !editFormData.start_date || !editFormData.end_date) {
       setError('Veuillez remplir tous les champs obligatoires');
       return;
@@ -310,11 +284,6 @@ const CollectionManagementPage: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!isAdmin) {
-      setError('Accès refusé. Seuls les administrateurs peuvent supprimer des périodes de collecte.');
-      return;
-    }
-
     if (!confirm('Êtes-vous sûr de vouloir supprimer cette période de collecte ?')) {
       return;
     }
@@ -410,27 +379,6 @@ const CollectionManagementPage: React.FC = () => {
     return true;
   });
 
-  // Show loading or redirect for non-admin users
-  if (!profile || !isAdmin) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 flex items-center justify-center">
-        <div className="text-center">
-          <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Accès Refusé</h2>
-          <p className="text-gray-600 mb-4">
-            Seuls les administrateurs peuvent accéder à la gestion des collectes.
-          </p>
-          <button
-            onClick={() => navigate('/dashboard')}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Retour au tableau de bord
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 relative overflow-hidden">
       {/* Animated background elements */}
@@ -492,8 +440,7 @@ const CollectionManagementPage: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Create Collection Period Form - Only for admins */}
-        {isAdmin && (
+        {/* Create Collection Period Form */}
         <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-white/20 p-6 mb-8">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2 bg-emerald-100 rounded-lg">
@@ -653,7 +600,6 @@ const CollectionManagementPage: React.FC = () => {
             </div>
           </form>
         </div>
-        )}
 
         {/* Filters */}
         <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-white/20 p-6 mb-8">
@@ -752,11 +698,9 @@ const CollectionManagementPage: React.FC = () => {
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Statut
                       </th>
-                      {isAdmin && (
-                        <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Actions
-                        </th>
-                      )}
+                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -799,26 +743,24 @@ const CollectionManagementPage: React.FC = () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {getStatusBadge(period.status)}
                         </td>
-                        {isAdmin && (
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div className="flex justify-end space-x-2">
-                              <button
-                                onClick={() => handleEdit(period)}
-                                className="text-indigo-600 hover:text-indigo-900 transition-colors"
-                                title="Modifier"
-                              >
-                                <Edit2 className="w-5 h-5" />
-                              </button>
-                              <button
-                                onClick={() => handleDelete(period.id)}
-                                className="text-red-600 hover:text-red-900 transition-colors"
-                                title="Supprimer"
-                              >
-                                <Trash2 className="w-5 h-5" />
-                              </button>
-                            </div>
-                          </td>
-                        )}
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <div className="flex justify-end space-x-2">
+                            <button
+                              onClick={() => handleEdit(period)}
+                              className="text-indigo-600 hover:text-indigo-900 transition-colors"
+                              title="Modifier"
+                            >
+                              <Edit2 className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(period.id)}
+                              className="text-red-600 hover:text-red-900 transition-colors"
+                              title="Supprimer"
+                            >
+                              <Trash2 className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </td>
                       </motion.tr>
                     ))}
                   </tbody>
