@@ -489,8 +489,8 @@ const ContributorPilotagePage = () => {
 
   const getVariationIcon = (variation: number | null) => { 
     if (variation === null) return null; 
-    if (variation > 0) return <TrendingUp className="w-4 h-4 text-green-500" />;
-    if (variation < 0) return <TrendingUp className="w-4 h-4 text-red-500 transform rotate-180" />;
+    if (variation < 0) return <TrendingUp className="w-4 h-4 text-green-500" />;
+    if (variation > 0) return <TrendingUp className="w-4 h-4 text-red-500 transform rotate-180" />;
     return null;
   };
 
