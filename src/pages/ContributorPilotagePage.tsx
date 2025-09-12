@@ -1856,9 +1856,7 @@ const ContributorPilotagePage = () => {
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Cible
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Performance
-                    </th>
+
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Variation
                     </th>
@@ -1929,11 +1927,7 @@ const ContributorPilotagePage = () => {
                               {indicator.cible !== null ? indicator.cible.toLocaleString() : '-'}
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getPerformanceBadge(indicator.performances_pourcent)}`}>
-                              {indicator.performances_pourcent !== null ? `${indicator.performances_pourcent.toFixed(1)}%` : 'N/A'}
-                            </span>
-                          </td>
+            
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center space-x-2">
                               {getVariationIcon(indicator.variations_pourcent)}
