@@ -1721,17 +1721,7 @@ const ContributorPilotagePage = () => {
             transition={{ delay: 0.4 }}
             className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Meilleur Indicateur</p>
-                <p className="text-sm font-bold text-gray-900 mt-1 truncate">
-                  {vizDashboardStats.topPerformingIndicator || 'N/A'}
-                </p>
-              </div>
-              <div className="p-3 bg-yellow-100 rounded-lg">
-                <Award className="w-6 h-6 text-amber-600" />
-              </div>
-            </div>
+
           </motion.div>
         </div>
 
