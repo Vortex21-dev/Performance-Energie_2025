@@ -474,8 +474,8 @@ const ContributorPilotagePage = () => {
   const getPerformanceColor = (performance: number | null) => { 
     if (performance === null) return 'text-gray-500'; 
     if (performance >= 90) return 'text-green-600'; 
-    if (performance >= 70) return 'text-blue-600'; 
-    if (performance >= 50) return 'text-yellow-600'; 
+    if (performance >= 70) return 'text-green-600'; 
+    if (performance >= 50) return 'text-green-600'; 
     return 'text-red-600'; 
   };
 
