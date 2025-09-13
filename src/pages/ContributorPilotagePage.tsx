@@ -474,8 +474,8 @@ const ContributorPilotagePage = () => {
   const getPerformanceColor = (performance: number | null) => { 
     if (performance === null) return 'text-gray-500'; 
     if (performance >= 90) return 'text-green-600'; 
-    if (performance >= 70) return 'text-green-600'; 
-    if (performance >= 50) return 'text-green-600'; 
+    if (performance >= 70) return 'text-blue-600'; 
+    if (performance >= 50) return 'text-yellow-600'; 
     return 'text-red-600'; 
   };
 
@@ -489,8 +489,8 @@ const ContributorPilotagePage = () => {
 
   const getVariationIcon = (variation: number | null) => { 
     if (variation === null) return null; 
-    if (variation < 0) return <TrendingUp className="w-4 h-4 text-green-500" />;
-    if (variation > 0) return <TrendingUp className="w-4 h-4 text-red-500 transform rotate-180" />;
+    if (variation > 0) return <TrendingUp className="w-4 h-4 text-green-500" />;
+    if (variation < 0) return <TrendingUp className="w-4 h-4 text-red-500 transform rotate-180" />;
     return null;
   };
 
@@ -1713,7 +1713,24 @@ const ContributorPilotagePage = () => {
             </div>
           </motion.div>
 
-     
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500">Performance Moyenne</p>
+                <p className={`text-2xl font-bold mt-1 ${getPerformanceColor(vizDashboardStats.averagePerformance)}`}>
+                  {vizDashboardStats.averagePerformance.toFixed(1)}%
+                </p>
+              </div>
+              <div className="p-3 bg-purple-100 rounded-lg">
+                <Gauge className="w-6 h-6 text-purple-600" />
+              </div>
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1721,7 +1738,17 @@ const ContributorPilotagePage = () => {
             transition={{ delay: 0.4 }}
             className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
           >
-
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500">Meilleur Indicateur</p>
+                <p className="text-sm font-bold text-gray-900 mt-1 truncate">
+                  {vizDashboardStats.topPerformingIndicator || 'N/A'}
+                </p>
+              </div>
+              <div className="p-3 bg-yellow-100 rounded-lg">
+                <Award className="w-6 h-6 text-amber-600" />
+              </div>
+            </div>
           </motion.div>
         </div>
 
@@ -1823,8 +1850,19 @@ const ContributorPilotagePage = () => {
             ) : (
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
-             
-  
+                  <tr>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Axe Énergétique
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Critère
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Enjeux
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Processus
+                    </th>
                     <th scope="col" className="w-12 px-6 py-3"></th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">
                       Indicateur
@@ -1835,9 +1873,14 @@ const ContributorPilotagePage = () => {
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Cible
                     </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Performance
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Variation
+                    </th>
 
-
-
+                  </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {vizFilteredIndicators.map((indicator, index) => {
@@ -1851,9 +1894,37 @@ const ContributorPilotagePage = () => {
                           transition={{ delay: index * 0.05 }}
                           className="hover:bg-gray-50 transition-colors"
                         >
-                            
-                         
-                    
+                               <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
+                              {indicator.axe_energetique || 'N/A'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                              {indicator.critere || 'N/A'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                              {indicator.enjeux || 'N/A'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">{indicator.processus || 'N/A'}</div>
+                            <div className="text-xs text-gray-500">{indicator.processus_code}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <button
+                              onClick={() => toggleVizIndicatorExpansion(indicator.id)}
+                              className="p-1 rounded-full hover:bg-gray-200 transition-colors"
+                            >
+                              {isExpanded ? (
+                                <ChevronUp className="w-4 h-4 text-gray-500" />
+                              ) : (
+                                <ChevronDown className="w-4 h-4 text-gray-500" />
+                              )}
+                            </button>
+                          </td>
                           <td className="px-6 py-4">
                             <div>
                               <div className="text-sm font-medium text-gray-900">{indicator.indicateur}</div>
@@ -1875,8 +1946,19 @@ const ContributorPilotagePage = () => {
                               {indicator.cible !== null ? indicator.cible.toLocaleString() : '-'}
                             </div>
                           </td>
-            
-      
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getPerformanceBadge(indicator.performances_pourcent)}`}>
+                              {indicator.performances_pourcent !== null ? `${indicator.performances_pourcent.toFixed(1)}%` : 'N/A'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center space-x-2">
+                              {getVariationIcon(indicator.variations_pourcent)}
+                              <span className={`text-sm font-medium ${getPerformanceColor(indicator.variations_pourcent)}`}>
+                                {indicator.variations_pourcent !== null ? `${indicator.variations_pourcent.toFixed(1)}` : 'N/A'}
+                              </span>
+                            </div>
+                          </td>
                      
                         </motion.tr>
                         
