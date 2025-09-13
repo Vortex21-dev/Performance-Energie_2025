@@ -2022,45 +2022,7 @@ const ContributorPilotagePage = () => {
         </div>
 
         {/* Performance Summary */}
-        {vizFilteredIndicators.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6"
-          >
-            <div className="flex items-center mb-4">
-              <div className="p-2 bg-green-100 rounded-lg mr-3">
-                <Activity className="w-5 h-5 text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-800">Résumé des Performances</h3>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600 mb-1">
-                  {vizFilteredIndicators.filter(ind => (ind.performances_pourcent || 0) >= 80).length}
-                </div>
-                <div className="text-sm text-gray-600">Excellentes performances (≥80%)</div>
-              </div>
-              
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600 mb-1">
-                  {vizFilteredIndicators.filter(ind => (ind.performances_pourcent || 0) >= 60 && (ind.performances_pourcent || 0) < 80).length}
-                </div>
-                <div className="text-sm text-gray-600">Bonnes performances (60-79%)</div>
-              </div>
-              
-              <div className="text-center">
-                <div className="text-2xl font-bold text-red-600 mb-1">
-                  {vizFilteredIndicators.filter(ind => (ind.performances_pourcent || 0) < 60).length}
-                </div>
-                <div className="text-sm text-gray-600">À améliorer (&lt;60%)</div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
+      
         {/* Information Box */}
         <div className="mt-8 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
           <div className="flex">
