@@ -1719,17 +1719,8 @@ const ContributorPilotagePage = () => {
             transition={{ delay: 0.3 }}
             className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Performance Moyenne,</p>
-                <p className={`text-2xl font-bold mt-1 ${getPerformanceColor(vizDashboardStats.averagePerformance)}`}>
-                  {vizDashboardStats.averagePerformance.toFixed(1)}%
-                </p>
-              </div>
-              <div className="p-3 bg-purple-100 rounded-lg">
-                <Gauge className="w-6 h-6 text-purple-600" />
-              </div>
-            </div>
+         
+              
           </motion.div>
 
           <motion.div
