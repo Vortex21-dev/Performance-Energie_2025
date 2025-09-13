@@ -1878,25 +1878,7 @@ const ContributorPilotagePage = () => {
                           transition={{ delay: index * 0.05 }}
                           className="hover:bg-gray-50 transition-colors"
                         >
-                               <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
-                              {indicator.axe_energetique || 'N/A'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                              {indicator.critere || 'N/A'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                              {indicator.enjeux || 'N/A'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">{indicator.processus || 'N/A'}</div>
-                            <div className="text-xs text-gray-500">{indicator.processus_code}</div>
-                          </td>
+                            
                           <td className="px-6 py-4">
                             <button
                               onClick={() => toggleVizIndicatorExpansion(indicator.id)}
@@ -1930,19 +1912,7 @@ const ContributorPilotagePage = () => {
                               {indicator.cible !== null ? indicator.cible.toLocaleString() : '-'}
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getPerformanceBadge(indicator.performances_pourcent)}`}>
-                              {indicator.performances_pourcent !== null ? `${indicator.performances_pourcent.toFixed(1)}%` : 'N/A'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center space-x-2">
-                              {getVariationIcon(indicator.variations_pourcent)}
-                              <span className={`text-sm font-medium ${getPerformanceColor(indicator.variations_pourcent)}`}>
-                                {indicator.variations_pourcent !== null ? `${indicator.variations_pourcent.toFixed(1)}` : 'N/A'}
-                              </span>
-                            </div>
-                          </td>
+                        
                      
                         </motion.tr>
                         
