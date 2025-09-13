@@ -1838,7 +1838,6 @@ const ContributorPilotagePage = () => {
 
 
 
-                  </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {vizFilteredIndicators.map((indicator, index) => {
