@@ -1854,18 +1854,7 @@ const ContributorPilotagePage = () => {
                         >
                             
                          
-                          <td className="px-6 py-4">
-                            <button
-                              onClick={() => toggleVizIndicatorExpansion(indicator.id)}
-                              className="p-1 rounded-full hover:bg-gray-200 transition-colors"
-                            >
-                              {isExpanded ? (
-                                <ChevronUp className="w-4 h-4 text-gray-500" />
-                              ) : (
-                                <ChevronDown className="w-4 h-4 text-gray-500" />
-                              )}
-                            </button>
-                          </td>
+                    
                           <td className="px-6 py-4">
                             <div>
                               <div className="text-sm font-medium text-gray-900">{indicator.indicateur}</div>
